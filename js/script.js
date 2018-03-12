@@ -53,6 +53,7 @@ Column.prototype = {
 };
 }	
     }
+
   }
   /* 3. Tworzymy klasę Column:
   standardowe elementy: name, $element
@@ -94,6 +95,7 @@ Column.prototype = {
 			return $card;
     }
 }
+//Tworzymy obiekt tablicy i przypiac odpowiednie nasluchiwania zdarzen
 var board = {
     name: 'Kanban Board',
     addColumn: function(column) {
@@ -102,6 +104,37 @@ var board = {
     },
     $element: $('#board .column-container')
 };
+//Dodawanie metody initSortable, dzięki ktoórej mozemy sortowac elementy listy za pomoca metody przeciagnij i upusc:
+function initSortable() {
+   $('.column-card-list').sortable({ // najpierw za pomoca selektora wybieramy wszystkie listy kart, ktore maja miec mozliwośc przenoszenia. ".sortable" dodaje funkcjonalnośc sortowania
+     connectWith: '.column-card-list',
+     placeholder: 'card-placeholder'
+   }).disableSelection();
+ }
+$('.create-column')
+  .click(function(){
+  var name = prompt('Enter a column name');
+  var column = new Column(name);
+      board.addColumn(column);
+    });
 
-//Kontunuuj obiekt tablicy.
+  // CREATING COLUMNS
+var todoColumn = new Column('To do');
+var doingColumn = new Column('Doing');
+var doneColumn = new Column('Done');
+
+// ADDING COLUMNS TO THE BOARD
+board.addColumn(todoColumn);
+board.addColumn(doingColumn);
+board.addColumn(doneColumn);
+
+// CREATING CARDS
+var card1 = new Card('New task');
+var card2 = new Card('Create kanban boards');
+
+// ADDING CARDS TO COLUMNS
+todoColumn.addCard(card1);
+doingColumn.addCard(card2);
+
+.createColumn();
 
