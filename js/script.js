@@ -1,6 +1,4 @@
 $(function() {
-    // here we will put the code of our application
-})
 // 1. Instrukcja, która sprawi, że kod naszej aplikacji zacznie się wykonywać dopiero po załadowaniu całego drzewa DOM.
 function randomString() {
     var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ';
@@ -21,25 +19,18 @@ function Column(name) {
     this.name = name;
     this.$element = createColumn();
     //Metoda dla klasy Column
-Column.prototype = {
-    addCard: function(card) {
-      this.$element.children('ul').append(card.$element);/*wskazuje na div.column. Tak więc za pomocą this.$element.children('ul') 
-      dostaliśmy się do właściwej listy. Teraz możemy podpiąć do niej kartę za pomocą append(card.$element).*/
-    },
-    removeColumn: function() { // metoda za pomocą której będzie można usuwać kolumnę 
-      this.$element.remove();// za pomocą this.$element.remove() usuwamy naszą kolumnę w momencie w któym przyciśniemy przycisk "X"
-    }
-};
-    function createColumn() {
+
+function createColumn() {
     var $column = $('<div>').addClass('column');
-	var $columnTitle = $('<h2>').addClass('column-title').text(self.name);
-	var $columnCardList = $('<ul>').addClass('column-card-list');
-	var $columnDelete = $('<button>').addClass('btn-delete').text('x');
-	var $columnAddCard = $('<button>').addClass('add-card').text('Add a card');
-	// Dodanie eventu:
-	$columnDelete.click(function() {
-        self.removeColumn();
+  	var $columnTitle = $('<h2>').addClass('column-title').text(self.name);
+  	var $columnCardList = $('<ul>').addClass('column-card-list');
+  	var $columnDelete = $('<button>').addClass('btn-delete').text('x');
+  	var $columnAddCard = $('<button>').addClass('add-card').text('Add a card');
+	   // Dodanie eventu:
+	   $columnDelete.click(function() {
+      self.removeColumn();
 });
+
     $columnAddCard.click(function() {
         self.addCard(new Card(prompt("Enter the name of the card"))); // zastosowanie "self" funkcja, która jest przekazana jako parametr metody click
 });
@@ -50,11 +41,17 @@ Column.prototype = {
         .append($columnCardList);
     //Return stworzonych kolumn    
 	return $column;
-};
-}	
+}
+}
+ Column.prototype = {
+    addCard: function(card) {
+      this.$element.children('ul').append(card.$element);/*wskazuje na div.column. Tak więc za pomocą this.$element.children('ul') 
+      dostaliśmy się do właściwej listy. Teraz możemy podpiąć do niej kartę za pomocą append(card.$element).*/
+    },
+    removeColumn: function() { // metoda za pomocą której będzie można usuwać kolumnę 
+      this.$element.remove();// za pomocą this.$element.remove() usuwamy naszą kolumnę w momencie w któym przyciśniemy przycisk "X"
     }
-
-  }
+};
   /* 3. Tworzymy klasę Column:
   standardowe elementy: name, $element
   Przy tworzeniu nowej instancji klasy Column tworzony jest też element jQuery. Dzieje się to po wywołaniu funkcji createColumn().
@@ -75,12 +72,7 @@ Column.prototype = {
 	    this.description = description;
 	    this.$element = createCard();
 	    //Tworzenie prototypu
-	    Card.prototype = {
-		removeCard: function() {
-		this.$element.remove();
-}
-}
-
+	   
     function createCard() {
 	    var $card = $('<li>').addClass('card');
 	    var $cardDescription = $('<p>').addClass('card-description').text(self.description);
@@ -95,6 +87,11 @@ Column.prototype = {
 			return $card;
     }
 }
+Card.prototype = {
+    removeCard: function() {
+    this.$element.remove();
+}
+};
 //Tworzymy obiekt tablicy i przypiac odpowiednie nasluchiwania zdarzen
 var board = {
     name: 'Kanban Board',
@@ -135,6 +132,6 @@ var card2 = new Card('Create kanban boards');
 // ADDING CARDS TO COLUMNS
 todoColumn.addCard(card1);
 doingColumn.addCard(card2);
+})
 
-.createColumn();
 
